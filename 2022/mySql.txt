@@ -1,0 +1,132 @@
+//
+Nicolas Eduardo Perez
+//
+
+//////////////////
+CREATE TABLE `abm_usuarios`.`usuario` ( `id` INT NOT NULL AUTO_INCREMENT , `nombre` VARCHAR(30) NOT NULL , `apellido` VARCHAR(30) NOT NULL , `clave` VARCHAR(6) NOT NULL , `mail` VARCHAR(50) NOT NULL , `fecha_de_registro` DATE NOT NULL , PRIMARY KEY (`id`)) ENGINE = InnoDB;
+ALTER TABLE `usuario` ADD `localidad` VARCHAR(50) NOT NULL AFTER `fecha_de_registro`;
+
+INSERT INTO `usuario`(`id`, `nombre`, `apellido`, `clave`, `mail`, `fecha_de_registro`,`localidad`) 
+             VALUES ('1','Esteban','Madou','2345','dkantor0@example.com','2021-1-7','Quilmes'),
+             	    ('2','German','Gerram','1234','ggerram1@hud.gov','2020-5-8','Berazategui'),
+                    ('3','Deloris','Fosis','5678','bsharpe2@wisc.edu','2020-11-28','Avellaneda'),
+                    ('4','Brok','Neiner','4567','bblazic3@desdev.cn','2020-12-8','Quilmes'),
+                    ('5','Garrick','Brent','6789','gbrent4@theguardian.com','2020-12-17','Moron'),
+                    ('6','Bili','Baus','0123','bhoff5@addthis.com','2020-11-27','Moreno')
+
+​/////////////////
+CREATE TABLE `abm_usuarios`.`producto` ( `id` INT NOT NULL AUTO_INCREMENT , `codigo_de_barra` VARCHAR(8) NOT NULL , `nombre` VARCHAR(30) NOT NULL , `tipo` VARCHAR(20) NOT NULL , `stock` INT NOT NULL , `precio` DOUBLE NOT NULL , `fecha_de_creacion` DATE NOT NULL , `fecha_de_modificacion` DATE NOT NULL , PRIMARY KEY (`id`)) ENGINE = InnoDB;
+
+INSERT INTO `producto`(`id`, `codigo_de_barra`, `nombre`, `tipo`, `stock`, `precio`, `fecha_de_creacion`, `fecha_de_modificacion`) 
+	      VALUES ('1001','77900361','Westmacott','liquido','33','15.87','2021-2-9',  '2020-9-26'),
+              	     ('1002','77900362','Spirit','solido','45',     '69.74','2020-9-18', '2020-4-14'),
+                     ('1003','77900363','Newgrosh','polvo','14',    '68.19','2021-11-29','2021-2-11'),
+                     ('1004','77900364','McNickle','polvo','19',    '53.51','2021-11-28','2020-4-17'),
+                     ('1005','77900365','Hudd','solido','68',       '26.56','2021-12-19','2020-6-19'),
+                     ('1006','77900366','Schrader','polvo','17',    '96.54','2021-8-2',  '2020-4-18'),
+                     ('1007','77900367','Bachellier','solido','59', '69.17','2021-1-30', '2020-6-7'),
+                     ('1008','77900368','Fleming','solido','38',    '66.77','2021-10-26','2020-10-3'),
+                     ('1009','77900369','Hurry','solido','44',      '43.01','2021-7-4',  '2020-5-30'),
+                     ('1010','77900310','Krauss','polvo','73',      '35.73','2021-3-3',  '2020-8-30')
+
+////////////////
+
+CREATE TABLE `abm_usuarios`.`venta` ( `id` INT NOT NULL AUTO_INCREMENT , `id_producto` INT NOT NULL , `id_usuario` INT NOT NULL , `cantidad` INT NOT NULL , `fecha_de_venta` DATE NOT NULL , PRIMARY KEY (`id`)) ENGINE = InnoDB;
+
+​INSERT INTO `venta` (`id`, `id_producto`, `id_usuario`, `cantidad`, `fecha_de_venta`) 
+	    VALUES  ('1',    '1001',           '1',     '2',        '2020-7-19'),
+            	    ('2',    '1008',           '2',     '3',        '2020-8-16'),
+                    ('3',    '1007',           '2',     '4',        '2021-1-24'),
+                    ('4',    '1006',           '3',     '5',        '2021-1-14'),
+                    ('5',    '1003',           '4',     '6',        '2021-3-20'),
+                    ('6',    '1005',           '5',     '7',        '2021-2-22'),
+                    ('7',    '1003',           '4',     '6',        '2020-12-2'),
+                    ('8',    '1003',           '6',     '6',        '2020-6-10'),
+                    ('9',    '1002',           '6',     '6',        '2021-2-5'),
+                    ('10',    '1001',          '6',     '1',        '2020-5-17')
+
+
+////////////////
+
+//
+Nicolas Eduardo Perez
+//
+Realizar las siguientes consultas
+
+1. Obtener los detalles completos de todos los usuarios, ordenados alfabéticamente.
+
+SELECT * FROM `usuario` order by nombre; 
+
+2. Obtener los detalles completos de todos los productos líquidos.
+
+SELECT * FROM `producto` WHERE tipo ='liquido';
+
+3. Obtener todas las compras en los cuales la cantidad esté entre 6 y 10 inclusive.
+
+SELECT * FROM `venta` WHERE cantidad in ('6','10');
+
+4. Obtener la cantidad total de todos los productos vendidos.
+
+SELECT SUM(cantidad) as Cantida_Vendida FROM `venta`; 
+
+5. Mostrar los primeros 3 números de productos que se han enviado.
+
+SELECT id FROM `venta` LIMIT 3;
+
+6. Mostrar los nombres del usuario y los nombres de los productos de cada venta.
+
+SELECT venta.id, usuario.nombre as Nombre_Usuario, producto.nombre as Nombre_Producto, venta.cantidad, venta.fecha_de_venta 
+FROM venta INNER JOIN usuario on usuario.id = venta.id_usuario INNER JOIN producto on producto.id = venta.id_producto; 
+
+7. Indicar el monto (cantidad * precio) por cada una de las ventas.
+
+SELECT venta.id, usuario.nombre as Nombre_Usuario, producto.nombre as Nombre_Producto, venta.cantidad, venta.fecha_de_venta, (producto.precio* venta.cantidad)as Total_A_Pagar 
+FROM venta INNER JOIN usuario on usuario.id = venta.id_usuario INNER JOIN producto on producto.id = venta.id_producto; 
+
+8. Obtener la cantidad total del producto 1003 vendido por el usuario 104.
+
+select usuario.id as id_usuario, COUNT(venta.cantidad) as cantidad_vendidas from venta, usuario 
+where venta.id_usuario = '4' and venta.id_producto = '1003';
+
+9. Obtener todos los números de los productos vendidos por algún usuario de ‘Avellaneda’.
+
+select venta.id_producto as numero_de_producto from usuario, venta 
+where venta.id_usuario = usuario.id and usuario.localidad = 'Avellaneda'; 
+
+10.Obtener los datos completos de los usuarios cuyos nombres contengan la letra ‘u’.
+
+SELECT * FROM usuario where usuario.nombre LIKE '%U%' or usuario.apellido LIKE '%U%';
+
+11. Traer las ventas entre junio del 2020 y febrero 2021.
+
+SELECT * FROM venta where venta.fecha_de_venta BETWEEN '2020-06-01' and '2021-02-01'; 
+
+12. Obtener los usuarios registrados antes del 2021.
+
+SELECT * FROM usuario where usuario.fecha_de_registro < '2020-12-31'; 
+
+13.Agregar el producto llamado ‘Chocolate’, de tipo Sólido y con un precio de 25,35.
+
+INSERT INTO `producto`( `codigo_de_barra`, `nombre`, `tipo`, `stock`, `precio`, `fecha_de_creacion`, `fecha_de_modificacion`) 
+	        VALUES ('77900370',   'Chocolate','Solido','0','25.35','2022-04-19', '2022-04-19')
+
+14.Insertar un nuevo usuario .
+
+INSERT INTO `usuario`(`nombre`, `apellido`, `clave`, `mail`, `fecha_de_registro`,`localidad`) 
+             VALUES ('Octavio','Villegas','2218','villegas@utnfra.com','2022-4-19','Lanus')
+
+15.Cambiar los precios de los productos de tipo sólido a 66,60.
+
+UPDATE producto set producto.precio = '66.60' where producto.tipo = 'Solido';
+
+16.Cambiar el stock a 0 de todos los productos cuyas cantidades de stock sean menores a 20 inclusive.
+
+UPDATE producto set producto.stock = '0' where producto.stock <='20';
+
+17.Eliminar el producto número 1010.
+
+DELETE FROM producto WHERE producto.id = 1010;
+
+18.Eliminar a todos los usuarios que no han vendido productos.
+
+DELETE FROM usuario WHERE usuario.id NOT IN (SELECT venta.id_usuario FROM venta)

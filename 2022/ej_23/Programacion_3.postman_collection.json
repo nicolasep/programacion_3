@@ -1,0 +1,173 @@
+{
+	"info": {
+		"_postman_id": "7d96f9dd-415b-4301-ae76-0e1c777a866e",
+		"name": "Programacion_3",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "ej_20",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "nombre",
+							"value": "nombreUsuario",
+							"type": "text"
+						},
+						{
+							"key": "clave",
+							"value": "123456",
+							"type": "text"
+						},
+						{
+							"key": "mail",
+							"value": "prueba@mail.com",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "http://localhost/slim-php-heroku/app/ej_20/registro.php",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"path": [
+						"slim-php-heroku",
+						"app",
+						"ej_20",
+						"registro.php"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "ej_21",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "",
+							"value": "",
+							"type": "text",
+							"disabled": true
+						}
+					]
+				},
+				"url": {
+					"raw": "http://localhost/slim-php-heroku/app/ej_21/listado.php?archivo=usuarios.csv",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"path": [
+						"slim-php-heroku",
+						"app",
+						"ej_21",
+						"listado.php"
+					],
+					"query": [
+						{
+							"key": "archivo",
+							"value": "usuarios.csv"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "ej_22",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "clave",
+							"value": "222222",
+							"type": "text"
+						},
+						{
+							"key": "mail",
+							"value": "prueba2@mail.com",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "http://localhost/slim-php-heroku/app/ej_22/Login.php",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"path": [
+						"slim-php-heroku",
+						"app",
+						"ej_22",
+						"Login.php"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "ej_23",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "nombre",
+							"value": "pepe",
+							"type": "text"
+						},
+						{
+							"key": "clave",
+							"value": "123456",
+							"type": "text"
+						},
+						{
+							"key": "mail",
+							"value": "nicolas@mail.com",
+							"type": "text"
+						},
+						{
+							"key": "archivo",
+							"type": "file",
+							"src": "/C:/Users/nicol/Pictures/im2.jpg"
+						}
+					]
+				},
+				"url": {
+					"raw": "http://localhost/slim-php-heroku/app/ej_23/registro.php",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"path": [
+						"slim-php-heroku",
+						"app",
+						"ej_23",
+						"registro.php"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
